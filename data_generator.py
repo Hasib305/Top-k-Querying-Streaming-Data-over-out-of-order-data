@@ -1,3 +1,6 @@
+import random
+import time
+
 class CPiX:
     def __init__(self):
         self.p_values = [0] * 10  # Initialize 10 p-values (0th index will be unused)
@@ -38,27 +41,10 @@ class CPiX:
 # Example usage
 cpix = CPiX()
 
-# Simulate updates at different times
-updates = [
-    (1, 34),
-(3, 56),
-(5, 12),
-(7, 89),
-(8, 47),
-(10, 20),
-(11, 77),
-(12, 65),
-(13, 15),
-(14, 40),
-(15, 99),
-(16, 82),
-(17, 53),
-(18, 10),
-
-]
-
-# Process each update
-for s, value in updates:
-    cpix.update_values(s, value)
+# Process 18 random updates with a delay of 3 seconds between each
+for s in range(1, 19):
+    value = random.randint(1, 100)  # Generate a random value
+    cpix.update_values(s, value)     # Update the values
     print(f"After update at time {s}s with value {value}:")
     print(cpix.get_values())
+    time.sleep(3)  # Delay for 3 seconds
