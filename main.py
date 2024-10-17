@@ -52,12 +52,20 @@ class CPiX:
         if product_name in self.products:
             product_data = self.products[product_name]
             return {
-                "P-values": product_data['p_values'][1:],  
-                "C-values": product_data['c_values'][1:],  
+                "P-values": product_data['p_values'][1:],  # Skip the 0th index for display
+                "C-values": product_data['c_values'][1:],  # Skip the 0th index for display
                 "G-value": product_data['g_value']
             }
         else:
             return None
+
+    def top_k_products(self, k):
+        # Get G-values for all products
+        g_values = {product: data['g_value'] for product, data in self.products.items()}
+
+        # Sort products by G-value in descending order and get the top K
+        top_k = sorted(g_values.items(), key=lambda item: item[1], reverse=True)[:k]
+        return top_k
 
 
 # Example usage
@@ -93,4 +101,11 @@ for s in unique_nearby_shuffled_sequence:
         cpix.update_values(s, product, value)  # Update the values for each product
         print(f"After update at time {s}s for {product} with value {value}:")
         print(cpix.get_values(product))
+    
+    # Retrieve the top K products based on G-values after each second
+    top_k = cpix.top_k_products(2)  # Change the number to get more or fewer products
+    print("Top K Products based on G-values after update:")
+    for product, g_value in top_k:
+        print(f"{product}: G-value = {g_value}")
+
     time.sleep(1)  # Delay for 1 second
