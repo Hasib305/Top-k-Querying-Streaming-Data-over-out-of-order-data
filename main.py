@@ -129,4 +129,3 @@ for s in unique_nearby_shuffled_sequence:
             f.write(f"{s},{product},{g_value}\n")
 
     time.sleep(1)  # Delay for 1 second 
-
